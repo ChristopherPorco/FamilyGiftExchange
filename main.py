@@ -19,7 +19,7 @@
 import csv
 import random
 
-def transferCSV():
+def parseFamilies():
     persons = dict()
 
     with open("families.csv", newline = '') as families:
@@ -32,16 +32,36 @@ def transferCSV():
 
     return persons
 
-def assignGivers(persons):
+def parsePrevGivers():
+    prev_givers = dict()
+
+    with open("prev_givers.csv", newline = '') as prevGivers:
+        reader = csv.reader(prevGivers, delimiter = ' ', quotechar = '|')
+        for row in reader:
+            givers = ','.join(row).strip().split(',')
+            prev_givers[givers[0]] = givers[1:]
+
+    return prev_givers
+
+def assignGivers(families, prev_givers):
     givers = dict()
+
+    print(families)
+    print("\n")
+    print(prev_givers)
+
+    # for family in families:
+
+
     return givers
 
 def outputGivers(givers):
     print("The givers have been outputted to a CSV")
 
 def main():
-    persons = transferCSV()
-    givers = assignGivers(persons)
+    families = parseFamilies()
+    prev_givers = parsePrevGivers()
+    givers = assignGivers(families, prev_givers)
     outputGivers(givers)
 
 if __name__ == '__main__':
