@@ -76,7 +76,6 @@ def assignGivers(families, prev_givers, unused_giftees):
             giftees.append(possible_giftees[new_giftee])
             unused_giftees.remove(possible_giftees[new_giftee])
             possible_giftees.remove(possible_giftees[new_giftee])
-        
         givers[giver] = giftees
 
     return givers
@@ -84,8 +83,8 @@ def assignGivers(families, prev_givers, unused_giftees):
 # Writes dictionary of families and giftees to a CSV file
 def outputGivers(givers):
     with open('new_givers.csv', 'w', newline = '') as newGivers:
-        writer = csv.writer(newGivers, delimiter=',', quotechar='|', 
-                            quoting=csv.QUOTE_MINIMAL)
+        writer = csv.writer(newGivers, delimiter = ',', quotechar = '|', 
+                            quoting = csv.QUOTE_MINIMAL)
         for giver in givers:
             row = list()
             row.append(giver)
@@ -100,7 +99,7 @@ def main():
     prev_givers = parsePrevGivers()
     givers = assignGivers(families, prev_givers, giftees)
     outputGivers(givers)
-    print("The following is the new list of families and giftees: \n")
+    print("\nThe following is the new list of families and giftees: ")
     print(givers)
 
 if __name__ == '__main__':
