@@ -16,4 +16,4 @@ To use this program for yourself:
 5. Open "next_givers.csv" for the new list of families and their giftees!
     
 ## Questions, Comments, or Suggestions
-If you have any questions, comments, or suggestions about this script, please get in touch with me at porcochristopher@gmail.com or make a pull request,
+If you have any questions, comments, or suggestions about this script, please get in touch with me at porcochristopher@gmail.com or make a pull request
