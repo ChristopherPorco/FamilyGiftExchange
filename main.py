@@ -16,10 +16,20 @@
 # Written by: Christopher Porco
 ################################################################################
 
+import csv
 import random
 
 def transferCSV():
     persons = dict()
+
+    with open("families.csv", newline = '') as families:
+        reader = csv.reader(families, delimiter = ' ', quotechar = '|')
+        for row in reader:
+            # Takes a row of CSV (as singleton string array), strips surrounding
+            # whitespace, and splits into multiple strings 
+            family = ','.join(row).strip().split(',')
+            persons[family[0]] = family[1:]
+
     return persons
 
 def assignGivers(persons):
