@@ -26,8 +26,8 @@ def parseFamilies():
     families = dict()
     persons = list()
 
-    with open("families.csv", newline = '') as families_csv:
-        reader = csv.reader(families_csv, delimiter = ' ', quotechar = '|')
+    with open('families.csv', newline = '') as families_csv:
+        reader = csv.reader(families_csv, delimiter = ',', quotechar = '|')
         for row in reader:
             # Takes a row of CSV (as singleton string array), strips surrounding
             # whitespace, and splits into multiple strings 
@@ -42,8 +42,8 @@ def parseFamilies():
 def parsePrevGivers():
     prev_givers = dict()
 
-    with open("prev_givers.csv", newline = '') as prevGivers:
-        reader = csv.reader(prevGivers, delimiter = ' ', quotechar = '|')
+    with open('prev_givers.csv', newline = '') as prevGivers:
+        reader = csv.reader(prevGivers, delimiter = ',', quotechar = '|')
         for row in reader:
             givers = ','.join(row).strip().split(',')
             prev_givers[givers[0]] = givers[1:]
@@ -83,7 +83,15 @@ def assignGivers(families, prev_givers, unused_giftees):
 
 # Writes dictionary of families and giftees to a CSV file
 def outputGivers(givers):
-    print("The givers have been outputted to a CSV")
+    with open('new_givers.csv', 'w', newline = '') as newGivers:
+        writer = csv.writer(newGivers, delimiter=',', quotechar='|', 
+                            quoting=csv.QUOTE_MINIMAL)
+        for giver in givers:
+            row = list()
+            row.append(giver)
+            for giftee in givers[giver]:
+                row.append(giftee)
+            writer.writerow(row)
 
 def main():
     result = parseFamilies()
@@ -91,7 +99,7 @@ def main():
     giftees = result[1]
     prev_givers = parsePrevGivers()
     givers = assignGivers(families, prev_givers, giftees)
-    # outputGivers(givers)
+    outputGivers(givers)
     print("The following is the new list of families and giftees: \n")
     print(givers)
 
