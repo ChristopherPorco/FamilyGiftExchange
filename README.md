@@ -1,4 +1,4 @@
-# FamilyGiftExchange
+# Family Gift Exchange
 ## About
 This Python script was written to solve a problem my family was having when picking out givers and giftees for our annual Christmas Eve gift exchange.
 
