@@ -9,6 +9,7 @@
 #      same family
 #   2. No person can give a gift to the same person they gave a gift to in 
 #      the previous year (as outlined in "prev_givers.csv")
+#   3. Each person receives only 1 gift
 #
 # A list of which families give a gift to which persons is outputted as a CSV 
 # file ("new_givers.csv").
@@ -19,19 +20,25 @@
 import csv
 import random
 
+# Parses "families.csv" and adds it to a dictionary, and creates a list of all 
+# persons (giftees)
 def parseFamilies():
-    persons = dict()
+    families = dict()
+    persons = list()
 
-    with open("families.csv", newline = '') as families:
-        reader = csv.reader(families, delimiter = ' ', quotechar = '|')
+    with open("families.csv", newline = '') as families_csv:
+        reader = csv.reader(families_csv, delimiter = ' ', quotechar = '|')
         for row in reader:
             # Takes a row of CSV (as singleton string array), strips surrounding
             # whitespace, and splits into multiple strings 
             family = ','.join(row).strip().split(',')
-            persons[family[0]] = family[1:]
+            families[family[0]] = family[1:]
+            for person in family[1:]:
+                persons.append((person + " " + family[0]))
 
-    return persons
+    return (families, persons)
 
+# Parses "prev_givers.csv" and adds it to a dictionary
 def parsePrevGivers():
     prev_givers = dict()
 
@@ -43,26 +50,50 @@ def parsePrevGivers():
 
     return prev_givers
 
-def assignGivers(families, prev_givers):
+# Creates a dictionary of each family (key) and a list of people to give a gift 
+# to (value)
+def assignGivers(families, prev_givers, unused_giftees):
     givers = dict()
 
-    print(families)
-    print("\n")
-    print(prev_givers)
+    for giver in families:
+        # Find list of possible giftees for 'giver' family
+        possible_giftees = list()
+        for family in families:
+            # Satisfies constraint 1
+            if (family != giver):
+                for member in families[family]:
+                    # Satisfies constraints 2 and 3
+                    fullname = member + " " + family
+                    if ((member not in prev_givers[giver]) and 
+                            (fullname in unused_giftees)):
+                        possible_giftees.append(fullname)
 
-    # for family in families:
-
+        # Randomly pick from possible giftees
+        giftees = list()
+        num_giftees = len(families[giver])
+        for i in range(num_giftees):
+            new_giftee = random.randint(0, len(possible_giftees) - 1)
+            giftees.append(possible_giftees[new_giftee])
+            unused_giftees.remove(possible_giftees[new_giftee])
+            possible_giftees.remove(possible_giftees[new_giftee])
+        
+        givers[giver] = giftees
 
     return givers
 
+# Writes dictionary of families and giftees to a CSV file
 def outputGivers(givers):
     print("The givers have been outputted to a CSV")
 
 def main():
-    families = parseFamilies()
+    result = parseFamilies()
+    families = result[0]
+    giftees = result[1]
     prev_givers = parsePrevGivers()
-    givers = assignGivers(families, prev_givers)
-    outputGivers(givers)
+    givers = assignGivers(families, prev_givers, giftees)
+    # outputGivers(givers)
+    print("The following is the new list of families and giftees: \n")
+    print(givers)
 
 if __name__ == '__main__':
     main()
