@@ -5,7 +5,7 @@ This Python script was written to solve a problem my family was having when pick
 According to the following constraints, the program assigns to each family in "families.csv" a number of giftees based on the number of members in the giver family, with the giftees chosen at random based on a pool of possible giftees:
 - No person in a given family can give a gift to another member of the same family
 - No person can give a gift to the same person they gave a gift to in the previous year (as outlined in "prev_givers.csv")
-- Each person receives only 1 gift
+- Each person receives only one gift
 
 ## How to Use
 To use this program for yourself:
