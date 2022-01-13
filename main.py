@@ -34,6 +34,7 @@ def readCSVToDict(filename):
             # whitespace, and splits into multiple strings 
             entry = ','.join(row).strip().split(',')
             dictionary[entry[0]] = entry[1:]
+
             for item in entry[1:]:
                 items.append((item + " " + entry[0]))
     return (dictionary, items)
@@ -50,9 +51,9 @@ def writeDictToCSV(filename, dictionary):
                 row.append(item)
             writer.writerow(row)
 
-# Sorts "families.csv" according to the number of members in each family, from 
-# most to least members
-# def sortFamiliesCSV():
+# Sorts a CSV file according to the number of elements in each row, from largest
+# to smallest number of elements
+# def sortCSV(filename):
 
 # Creates a dictionary of each family (key) and a list of people to give a gift 
 # to (value)
@@ -86,6 +87,8 @@ def assignGivers(families, prev_givers, unused_giftees):
     return givers
 
 def main():
+    # sortCSV("families.csv")
+
     families_result = readCSVToDict("families.csv")
     families = families_result[0]
     giftees = families_result[1]
