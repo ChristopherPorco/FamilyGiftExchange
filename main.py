@@ -1,5 +1,5 @@
 ################################################################################
-# Gift Exchange Script
+# Family Gift Exchange Script
 ################################################################################
 # Given a dictionary of families ("families.csv"), this script assigns to each 
 # family persons from another family to give a gift to, according to the 
@@ -13,6 +13,8 @@
 #
 # A list of which families give a gift to which persons is outputted as a CSV 
 # file ("new_givers.csv").
+#
+# For more information about this script, see the associated "README.md" file.
 ################################################################################
 # Written by: Christopher Porco
 ################################################################################
