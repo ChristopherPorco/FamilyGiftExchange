@@ -13,7 +13,7 @@ To use this program for yourself:
 2. Following the format displayed in "families.csv," enter in the families and their members that are involved in the gift exchange
 3. Following the format displayed in "prev_givers.csv," enter in the families and who they gave gifts to in the previous exchange. If there was not previous exchange, or if new families have joined the exchange from the previous year, simply enter in the family names and do not include any giftees
 4. Run "main.py" as you would run any Python file
-5. Open "next_givers.csv" for the new list of families and their giftees!
+5. Open "next_givers.csv" for the list of families and their new giftees!
 
 ## Known Issues
 There is currently one *minor* (not fatal) issue with the program:
