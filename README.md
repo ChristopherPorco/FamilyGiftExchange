@@ -16,9 +16,8 @@ To use this program for yourself:
 5. Open "next_givers.csv" for the new list of families and their giftees!
 
 ## Known Issues
-There are currently two *minor* issues with the program:
-1. If "families.csv" is not manually sorted from families with the most member to families with the least members, there is a greater chance the program will not run to completion. This is due to the nature of the problem, where the family with the most members is the hardest to find new giftees for. (This family has the most members and has the most giftees from the previous exchange, all of which cannot be given gifts for the current year.) **Automatic sorting of the inputted "families.csv" file will soon be implemented.**
-2. Occasionally, the program may not run to completion due to a list of possible giftees that is smaller than the size of the family for which giftees are currently being assigned. This can happen more often in cases where there is one very large family or where there is not a reasonably large number of families participating in an exchange. If this occurs when using the program, simply rerun it until the program goes to completion. (For average gift exchange cases, this will likely be a single rerun.) A complete understanding of the nature of this problem and a possible solution remains subject to investigation.
+There is currently one *minor* (not fatal) issue with the program:
+1. Occasionally, the program may not run to completion due to a list of possible giftees that is smaller than the size of the family for which giftees are currently being assigned. This can happen more often in cases where there is one very large family or where there is not a reasonably large number of families participating in an exchange. If this occurs when using the program, simply rerun it until the program goes to completion. (For average gift exchange cases, this will likely be a single rerun.) A complete understanding of the nature of this problem and a possible solution remains subject to investigation.
     
 ## Questions, Comments, or Suggestions
 If you have any questions, comments, or suggestions about this script, please get in touch with me at porcochristopher@gmail.com or make a pull request.
