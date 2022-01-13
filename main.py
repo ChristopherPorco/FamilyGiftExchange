@@ -20,9 +20,9 @@
 import csv
 import random
 
-# Reads a CSV file (filename) and returns (1) a dictionary version of the CSV 
-# file and (2) a list of all values in the CSV file (with key appended to the 
-# end of each value)
+# Reads a CSV file (filename) and returns a tuple containing (1) a dictionary 
+# version of the CSV file and (2) a list of all values in the CSV file (with 
+# key appended to the end of each value)
 def readCSVToDict(filename):
     dictionary = dict()
     items = list()
@@ -51,15 +51,38 @@ def writeDictToCSV(filename, dictionary):
                 row.append(item)
             writer.writerow(row)
 
+# Returns the second element of a tuple
+def getSecondElem(t):
+    return t[1]
+
 # Sorts a CSV file according to the number of elements in each row, from largest
 # to smallest number of elements
-# def sortCSV(filename):
+def sortCSV(filename):
+    result = readCSVToDict("families.csv")
+    unsorted_dict = result[0]
+
+    # Creates a list of two-element tuples containing (1) the original position
+    # of a row in the original CSV file, and (2) the number of items in that row
+    items = list()
+    for key in unsorted_dict:
+        new_item = (key, len(unsorted_dict[key]))
+        items.append(new_item)
+
+    items.sort(reverse = True, key = getSecondElem)
+
+    # Create a new, sorted dictionary (sorted based on the order in which keys
+    # are assigned values in the new dictionary)
+    sorted_dict = dict()
+    for item in items:
+        key = item[0]
+        sorted_dict[key] = unsorted_dict[key]
+
+    writeDictToCSV("families.csv", sorted_dict)
 
 # Creates a dictionary of each family (key) and a list of people to give a gift 
 # to (value)
 def assignGivers(families, prev_givers, unused_giftees):
     givers = dict()
-
     for giver in families:
         # Find list of possible giftees for 'giver' family
         possible_giftees = list()
@@ -87,7 +110,7 @@ def assignGivers(families, prev_givers, unused_giftees):
     return givers
 
 def main():
-    # sortCSV("families.csv")
+    sortCSV("families.csv")
 
     families_result = readCSVToDict("families.csv")
     families = families_result[0]
