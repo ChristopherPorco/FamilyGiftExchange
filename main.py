@@ -20,35 +20,39 @@
 import csv
 import random
 
-# Parses "families.csv" and adds it to a dictionary, and creates a list of all 
-# persons (giftees)
-def parseFamilies():
-    families = dict()
-    persons = list()
+# Reads a CSV file (filename) and returns (1) a dictionary version of the CSV 
+# file and (2) a list of all values in the CSV file (with key appended to the 
+# end of each value)
+def readCSVToDict(filename):
+    dictionary = dict()
+    items = list()
 
-    with open('families.csv', newline = '') as families_csv:
-        reader = csv.reader(families_csv, delimiter = ',', quotechar = '|')
+    with open(filename, newline = '') as csv_file:
+        reader = csv.reader(csv_file, delimiter = ',', quotechar = '|')
         for row in reader:
             # Takes a row of CSV (as singleton string array), strips surrounding
             # whitespace, and splits into multiple strings 
-            family = ','.join(row).strip().split(',')
-            families[family[0]] = family[1:]
-            for person in family[1:]:
-                persons.append((person + " " + family[0]))
+            entry = ','.join(row).strip().split(',')
+            dictionary[entry[0]] = entry[1:]
+            for item in entry[1:]:
+                items.append((item + " " + entry[0]))
+    return (dictionary, items)
 
-    return (families, persons)
+# Writes a dictionary (dictionary) to a CSV file (filename)
+def writeDictToCSV(filename, dictionary):
+    with open(filename, 'w', newline = '') as new_file:
+        writer = csv.writer(new_file, delimiter = ',', quotechar = '|', 
+                            quoting = csv.QUOTE_MINIMAL)
+        for key in dictionary:
+            row = list()
+            row.append(key)
+            for item in dictionary[key]:
+                row.append(item)
+            writer.writerow(row)
 
-# Parses "prev_givers.csv" and adds it to a dictionary
-def parsePrevGivers():
-    prev_givers = dict()
-
-    with open('prev_givers.csv', newline = '') as prevGivers:
-        reader = csv.reader(prevGivers, delimiter = ',', quotechar = '|')
-        for row in reader:
-            givers = ','.join(row).strip().split(',')
-            prev_givers[givers[0]] = givers[1:]
-
-    return prev_givers
+# Sorts "families.csv" according to the number of members in each family, from 
+# most to least members
+# def sortFamiliesCSV():
 
 # Creates a dictionary of each family (key) and a list of people to give a gift 
 # to (value)
@@ -71,6 +75,7 @@ def assignGivers(families, prev_givers, unused_giftees):
         # Randomly pick from possible giftees
         giftees = list()
         num_giftees = len(families[giver])
+
         for i in range(num_giftees):
             new_giftee = random.randint(0, len(possible_giftees) - 1)
             giftees.append(possible_giftees[new_giftee])
@@ -80,25 +85,17 @@ def assignGivers(families, prev_givers, unused_giftees):
 
     return givers
 
-# Writes dictionary of families and giftees to a CSV file
-def outputGivers(givers):
-    with open('new_givers.csv', 'w', newline = '') as newGivers:
-        writer = csv.writer(newGivers, delimiter = ',', quotechar = '|', 
-                            quoting = csv.QUOTE_MINIMAL)
-        for giver in givers:
-            row = list()
-            row.append(giver)
-            for giftee in givers[giver]:
-                row.append(giftee)
-            writer.writerow(row)
-
 def main():
-    result = parseFamilies()
-    families = result[0]
-    giftees = result[1]
-    prev_givers = parsePrevGivers()
+    families_result = readCSVToDict("families.csv")
+    families = families_result[0]
+    giftees = families_result[1]
+
+    prev_givers_result = readCSVToDict("prev_givers.csv")
+    prev_givers = prev_givers_result[0]
+
     givers = assignGivers(families, prev_givers, giftees)
-    outputGivers(givers)
+    writeDictToCSV("new_givers.csv", givers)
+
     print("\nThe following is the new list of families and giftees: ")
     print(givers)
 
