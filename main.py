@@ -32,8 +32,6 @@ def readCSVToDict(filename):
     with open(filename, newline = '') as csv_file:
         reader = csv.reader(csv_file, delimiter = ',', quotechar = '|')
         for row in reader:
-            # Takes a row of CSV (as singleton string array), strips surrounding
-            # whitespace, and splits into multiple strings 
             entry = ','.join(row).strip().split(',')
             dictionary[entry[0]] = entry[1:]
 
@@ -72,8 +70,6 @@ def sortCSV(filename):
 
     items.sort(reverse = True, key = getSecondElem)
 
-    # Create a new, sorted dictionary (sorted based on the order in which keys
-    # are assigned values in the new dictionary)
     sorted_dict = dict()
     for item in items:
         key = item[0]
@@ -86,13 +82,12 @@ def sortCSV(filename):
 def assignGivers(families, prev_givers, unused_giftees):
     givers = dict()
     for giver in families:
-        # Find list of possible giftees for 'giver' family
+        # Find list of possible giftees for 'giver' family according to 
+        # constraints
         possible_giftees = list()
         for family in families:
-            # Satisfies constraint 1
             if (family != giver):
                 for member in families[family]:
-                    # Satisfies constraints 2 and 3
                     fullname = member + " " + family
                     if ((member not in prev_givers[giver]) and 
                             (fullname in unused_giftees)):
