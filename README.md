@@ -16,7 +16,7 @@ To use this program for yourself:
 5. Open "next_givers.csv" for the list of families and their new giftees!
 
 ## Known Issues
-There is currently one *minor* (not fatal) issue with the program:
+There is currently one non-fatal issue with the program:
 1. Occasionally, the program may not run to completion due to a list of possible giftees that is smaller than the size of the family for which giftees are currently being assigned. This can happen more often in cases where there is one very large family or where there is not a reasonably large number of families participating in an exchange. If this occurs when using the program, simply rerun it until the program goes to completion. (For average gift exchange cases, this will likely be a single rerun.) A complete understanding of the nature of this problem and a possible solution remains subject to investigation.
     
 ## Questions, Comments, or Suggestions
